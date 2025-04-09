@@ -1,0 +1,14 @@
+# Ignore build files
+cmake-build-*/
+
+# Ignore IDE files
+.idea/
+*.iml
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore compiled binaries
+*.o
+*.out
+*.exe
