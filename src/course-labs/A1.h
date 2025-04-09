@@ -16,15 +16,7 @@ int LinearSearch(T elements[], int nrOfElements, T element)
 template <class T>
 void Selectionsort(T elements[], int nrOfElements)
 {
-    for (int j = 0; j < nrOfElements; ++j) {
-        int minIndex = j;
-        for (int i = j + 1; i < nrOfElements; ++i) {
-            if (elements[i] < elements[minIndex]) {
-                minIndex = i;
-            }
-        }
-        std::swap(elements[j], elements[minIndex]);
-    }
+    // Implementera en iterativ selectionsort.
 }
 
 template <class T>
