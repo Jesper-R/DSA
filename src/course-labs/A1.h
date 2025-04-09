@@ -5,12 +5,10 @@
 template <class T>
 int LinearSearch(T elements[], int nrOfElements, T element)
 {
-    int i = 0;
-    while (i < nrOfElements) {
+    for (int i = 0; i < nrOfElements; ++i) {
         if (elements[i] == element) {
             return i;
         }
-        i++;
     }
     return -1;
 }
