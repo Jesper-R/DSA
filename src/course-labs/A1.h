@@ -28,16 +28,35 @@ void Insertionsort(T elements[], int nrOfElements)
 template <class T>
 int BinarySearch(T elements[], int nrOfElements, T element)
 {
-    // Implementera en iterativ binärsökning.
-    return -11;
+    int low = 0;
+    int high = nrOfElements - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        if (element == elements[mid])
+            return mid;
+
+        if (element < elements[mid])
+            high = mid - 1;
+
+        if (element > elements[mid])
+            low = mid + 1;
+    }
+
+    return -1;
 }
 
 template <class T>
-int LinearSearchRecursive(T elements[], int nrOfElements, T element)
-{
-    // Implementera en rekursiv linjärsökning.
-    // Anropa er egna rekursiva funktion härifrån.
-    return -11;
+int LinearSearchRecursive(T elements[], int nrOfElements, T element) {
+    if (nrOfElements == 0) {
+        return -1; // Element not found
+    }
+    if (elements[0] == element) {
+        return 0; // Element found at the first position
+    }
+    int result = LinearSearchRecursive(elements + 1, nrOfElements - 1, element);
+    return (result == -1) ? -1 : result + 1; // Adjust index if found
 }
 
 template <class T>
