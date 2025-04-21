@@ -40,30 +40,22 @@ void Merge(T* elements, T* left, T* right, int nrOfElements, int leftNrOfElement
 template <class T>
 void Mergesort(T elements[], int nrOfElements)
 {
-    if(nrOfElements <= 1)
-        return;
+    if(nrOfElements > 1)
+    {
+        int leftNrOfElements = nrOfElements / 2;
+        int rightNrOfElements = nrOfElements - leftNrOfElements;
+        T* left = new T[leftNrOfElements];
+        T* right = new T[rightNrOfElements];
 
-    int mid = nrOfElements / 2;
+        for (int i = 0; i < leftNrOfElements; ++i)
+            left[i] = elements[i];
+        for (int i = 0; i < rightNrOfElements; ++i)
+            right[i] = elements[i + leftNrOfElements];
 
-    // Create temporary arrays for left and right halves
-    T* left = new T[mid];
-    T* right = new T[nrOfElements - mid];
-
-    // Copy data to temporary arrays
-    for(int i = 0; i < mid; ++i)
-        left[i] = elements[i];
-    for(int i = mid; i < nrOfElements; ++i)
-        right[i - mid] = elements[i];
-
-    // Recursive calls
-    Mergesort(left, mid);
-    Mergesort(right, nrOfElements - mid);
-    // Merge sorted halves
-    Merge(elements, left, right, nrOfElements, mid, nrOfElements - mid);
-
-    // Clean up
-    delete[] left;
-    delete[] right;
+        Mergesort(left, leftNrOfElements);
+        Mergesort(right, rightNrOfElements);
+        Merge(elements, left, right, nrOfElements, leftNrOfElements, rightNrOfElements);
+    }
 }
 
 template <class T>
