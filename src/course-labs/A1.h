@@ -67,6 +67,8 @@ int BinarySearchRecursive(T elements[], int nrOfElements, T element)
     return -11;
 }
 
+
+//overkill
 template <class T>
 void BinaryInsertionsort(T elements[], int nrOfElements)
 {
