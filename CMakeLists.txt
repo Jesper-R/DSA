@@ -12,4 +12,5 @@ add_executable(linear_search src/algorithms/linear_search.cpp
 
 # course-labs
 add_executable(lab_A1 src/course-labs/A1.cpp src/course-labs/A1.h
-        src/course-labs/A2.h)
+        src/course-labs/A2.h
+        src/course-labs/B1.h)
