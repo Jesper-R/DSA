@@ -5,29 +5,19 @@
 template <class T>
 int PartitionLomuto(T elements[], int start, int end)
 {
-    // Choose the rightmost element as pivot
     T pivot = elements[end];
-
-    // Index of smaller element
     int i = start - 1;
 
-    // Traverse through all elements
-    // compare each element with pivot
     for (int j = start; j < end; j++)
     {
-        // If current element is smaller than or equal to pivot
         if (elements[j] < pivot)
         {
-            // Increment index of smaller element
             i++;
             std::swap(elements[i], elements[j]);
         }
     }
 
-    // Place the pivot element at its correct position
     std::swap(elements[i + 1], elements[end]);
-
-    // Return the partition index
     return i + 1;
 }
 

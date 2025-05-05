@@ -19,4 +19,6 @@ add_executable(lab_A1 src/course-labs/A1.cpp src/course-labs/A1.h
         src/course-labs/b1/StackLinkedList.cpp
         src/course-labs/b1/StackArray.h
         src/course-labs/b1/StackArray.cpp
+        src/course-labs/b1/QueueLinkedList.h
+        src/course-labs/b1/QueueArray.h
 )

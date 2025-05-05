@@ -47,6 +47,18 @@ inline StackLinkedList<T>::~StackLinkedList()
     }
 }
 
+// look into and potentially easy solutions in other ones aswell
+/*
+template<typename T>
+inline StackLinkedList<T>::~StackLinkedList()
+{
+while (!isEmpty()) //
+{
+pop(); //
+}
+}
+*/
+
 
 template<typename T>
 inline void StackLinkedList<T>::push(const T& element)
