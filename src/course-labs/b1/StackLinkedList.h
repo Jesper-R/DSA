@@ -3,7 +3,6 @@
 #include <stdexcept>
 
 template <typename T>
-
 class StackLinkedList
 {
 private:
@@ -38,69 +37,52 @@ inline StackLinkedList<T>::StackLinkedList() : top(nullptr), nrOfItems(0) //
 template<typename T>
 inline StackLinkedList<T>::~StackLinkedList()
 {
-    Node* toDelete = this->top; //
-    while (this->top != nullptr) //
+    while(!isEmpty()) //
     {
-        this->top = this->top->next; //
-        delete toDelete; //
-        toDelete = this->top; //
+        pop(); //
     }
 }
-
-// look into and potentially easy solutions in other ones aswell
-/*
-template<typename T>
-inline StackLinkedList<T>::~StackLinkedList()
-{
-while (!isEmpty()) //
-{
-pop(); //
-}
-}
-*/
-
 
 template<typename T>
 inline void StackLinkedList<T>::push(const T& element)
 {
-    //Node* newNode = new Node(element); //
-    //newNode->next = this->top; //
-    //this->top = newNode; //
-    this->top = new Node(element, this->top); // samma resultat som ovan
-    ++this->nrOfItems; //
+    top = new Node(element, top); //
+    nrOfItems++; //
 }
 
 template<typename T>
 inline T StackLinkedList<T>::pop()
 {
-    if (this->top == nullptr) //
-        throw std::runtime_error("calling pop() on empty stack"); //
-    T toReturn = this->top->data; //
-    Node* toDelete = this->top; //
-    this->top = this->top->next; //
+    if (top == nullptr) //
+        throw std::runtime_error("calling pop on empty"); //
+
+    T toReturn = top->data; //
+    Node* toDelete = top; //
+    top = top->next; //
     delete toDelete; //
-    --this->nrOfItems; //
+    nrOfItems--; //
     return toReturn; //
 }
 
 template<typename T>
 inline const T& StackLinkedList<T>::peek() const
 {
-    if (this->top == nullptr) //
-        throw std::runtime_error("calling peek() on empty stack"); //
-    return this->top->data; //
+    if (top == nullptr) //
+        throw std::runtime_error("calling peek on empty"); //
+
+    return top->data; //
 }
 
 template<typename T>
 inline bool StackLinkedList<T>::isEmpty()const
 {
-    return this->top == nullptr; // kan ocks[ titta p[ nrofitems
+    return nrOfItems == 0; //
 }
 
 template<typename T>
 inline int StackLinkedList<T>::size()const
 {
-    return this->nrOfItems; //
+    return nrOfItems; //
 }
 
 #endif

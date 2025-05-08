@@ -16,9 +16,8 @@ private:
     };
 
     Node* front; //
-    Node* rear;  //
-    int count;   //
-
+    Node* rear; //
+    int nrOfItems; //
 public:
     QueueLinkedList();
     virtual ~QueueLinkedList();
@@ -32,15 +31,14 @@ public:
 };
 
 template<typename T>
-inline QueueLinkedList<T>::QueueLinkedList()
-    : front(nullptr), rear(nullptr), count(0) //
+inline QueueLinkedList<T>::QueueLinkedList() : front(nullptr), rear(nullptr), nrOfItems(0) //
 {
 }
 
 template<typename T>
 inline QueueLinkedList<T>::~QueueLinkedList()
 {
-    while (!isEmpty()) //
+    while(!isEmpty()) //
     {
         dequeue(); //
     }
@@ -50,52 +48,48 @@ template<typename T>
 inline void QueueLinkedList<T>::enqueue(const T& element)
 {
     Node* newNode = new Node(element); //
-    if (isEmpty()) //
-    {
+    if (isEmpty())//
         front = rear = newNode; //
-    }
     else
     {
         rear->next = newNode; //
         rear = newNode; //
     }
-    ++count; //
+    nrOfItems++; //
 }
 
 template<typename T>
 inline T QueueLinkedList<T>::dequeue()
 {
-    if (isEmpty()) //
-        throw std::underflow_error("Queue is empty"); //
+    if(isEmpty())//
+        throw std::runtime_error("underflow, queue empty"); //
 
-    Node* temp = front; //
-    T data = temp->data; //
+    T toReturn = front->data; //
+    Node* toDelete = front; //
     front = front->next; //
-    delete temp; //
-    --count; //
-    if (front == nullptr) //
-        rear = nullptr; //
-    return data; //
+    delete toDelete; //
+    nrOfItems--; //
+    return toReturn; //
 }
 
 template<typename T>
 inline const T& QueueLinkedList<T>::peek() const
 {
-    if (isEmpty()) //
-        throw std::underflow_error("Queue is empty"); //
+    if(isEmpty())//
+        throw std::runtime_error("underflow, queue empty"); //
     return front->data; //
 }
 
 template<typename T>
 inline bool QueueLinkedList<T>::isEmpty() const
 {
-    return count == 0; //
+    return nrOfItems == 0; //
 }
 
 template<typename T>
 inline int QueueLinkedList<T>::size() const
 {
-    return count; //
+    return nrOfItems; //
 }
 
 #endif
