@@ -42,6 +42,8 @@ public:
     T removeLast();
     T first() const ;
     T last() const;
+
+    void swap(int index1, int index2); //
 };
 
 template<class T>
@@ -110,7 +112,6 @@ T IndexedList<T>::removeFirst() {
     return removeAt(0);
 }
 
-
 template <class T>
 T IndexedList<T>::removeAt(int index) {
     if (index < 0 || index >= num_elements)
@@ -157,5 +158,17 @@ T IndexedList<T>::last() const {
     return getNodeAt(num_elements - 1)->data;
 }
 
+template <class T>
+void IndexedList<T>::swap(int index1, int index2) {
+    if (index1 < 0 || index1 >= num_elements || index2 < 0 || index2 >= num_elements)
+        throw std::runtime_error("out of bounds");
+
+    if (index1 == index2)
+        return;
+
+    Node* node1 = getNodeAt(index1);
+    Node* node2 = getNodeAt(index2);
+    std::swap(node1->data, node2->data);
+}
 
 #endif

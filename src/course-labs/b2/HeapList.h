@@ -45,15 +45,7 @@ void HeapList<T>::percolateUp(int index) {
     if (index > 0) {
         int parent = (index - 1) / 2;
         if (elements.getAt(index) > elements.getAt(parent)) {
-            T tempIndex = elements.getAt(index);
-            T tempParent = elements.getAt(parent);
-
-            elements.removeAt(index);
-            elements.addAt(index, tempParent);
-
-            elements.removeAt(parent);
-            elements.addAt(parent, tempIndex);
-
+            elements.swap(index, parent);
             percolateUp(parent);
         }
     }
@@ -78,31 +70,21 @@ T HeapList<T>::extract() {
 
 template <class T>
 void HeapList<T>::percolateDown(int index) {
-    if (index < elements.size())
-    {
-        int size = elements.size();
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
+    int size = elements.size();
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
 
-        if (left >= size)
-            return;
+    if (left >= size)
+        return;
 
-        int bestChild = left;
-        if (right < size && elements.getAt(right) > elements.getAt(left))
-            bestChild = right;
+    int bestChild = left;
+    if (right < size && elements.getAt(right) > elements.getAt(left)) {
+        bestChild = right;
+    }
 
-        if (elements.getAt(index) < elements.getAt(bestChild)) {
-            T tempIndex = elements.getAt(index);
-            T tempChild = elements.getAt(bestChild);
-
-            elements.removeAt(index);
-            elements.addAt(index, tempChild);
-
-            elements.removeAt(bestChild);
-            elements.addAt(bestChild, tempIndex);
-
-            percolateDown(bestChild);
-        }
+    if (elements.getAt(index) < elements.getAt(bestChild)) {
+        elements.swap(index, bestChild);
+        percolateDown(bestChild);
     }
 }
 
