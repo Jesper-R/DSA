@@ -19,6 +19,7 @@ private:
     Node* getNodeAt(int index) const {
         if (index < 0 || index >= num_elements)
             throw std::runtime_error("out of bounds");
+
         Node* walker = front;
         for (int i = 0; i < index; i++)
             walker = walker->next;
@@ -82,6 +83,7 @@ void OrderedList<T>::add(const T& element) {
 
     num_elements++;
 }
+
 template <class T>
 T OrderedList<T>::remove(const T& element) {
     if (isEmpty())
@@ -111,6 +113,8 @@ T OrderedList<T>::remove(const T& element) {
     num_elements--;
     return toReturn;
 }
+
+
 template <class T>
 T OrderedList<T>::removeAt(int index) {
     if (index < 0 || index >= num_elements)
@@ -121,15 +125,14 @@ T OrderedList<T>::removeAt(int index) {
 
     if (index == 0) {
         toDelete = front;
-        toReturn = toDelete->data;
         front = front->next;
     } else {
         Node* prev = getNodeAt(index - 1);
         toDelete = prev->next;
-        toReturn = toDelete->data;
         prev->next = toDelete->next;
     }
 
+    toReturn = toDelete->data;
     delete toDelete;
     num_elements--;
     return toReturn;
@@ -149,25 +152,26 @@ T OrderedList<T>::removeLast() {
 }
 template <class T>
 T OrderedList<T>::get(const T& element) const {
-    Node* walker = front;
-    while (walker != nullptr) {
-        if (walker->data == element) {
-            return walker->data;
+    for (int i = 0; i < num_elements; i++)
+    {
+        if (getNodeAt(i)->data == element)
+        {
+            return getNodeAt(i)->data;
         }
-        walker = walker->next;
     }
-    throw std::runtime_error("element not found");
+
+    throw std::runtime_error("");
 }
 template <class T>
 T OrderedList<T>::first() const {
     if (isEmpty())
-        throw std::runtime_error("empty list");
+        throw std::runtime_error("empty");
     return getNodeAt(0)->data;
 }
 template <class T>
 T OrderedList<T>::last() const {
     if (isEmpty())
-        throw std::runtime_error("empty list");
+        throw std::runtime_error("empty");
     return getNodeAt(num_elements - 1)->data;
 }
 

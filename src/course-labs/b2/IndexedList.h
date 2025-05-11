@@ -2,6 +2,7 @@
 #define INDEXEDLIST_HPP
 
 #include <stdexcept>
+#include <algorithm>
 
 template <class T>
 class IndexedList {
@@ -19,12 +20,12 @@ private:
     Node* getNodeAt(int index) const {
         if (index < 0 || index >= num_elements)
             throw std::runtime_error("out of bounds");
+
         Node* walker = front;
         for (int i = 0; i < index; i++)
             walker = walker->next;
         return walker;
     }
-
 public:
     IndexedList();
     ~IndexedList();
@@ -51,11 +52,11 @@ IndexedList<T>::IndexedList() : front(nullptr), num_elements(0)
 template <class T>
 IndexedList<T>::~IndexedList()
 {
-    while (front)
+    while (this->front != nullptr)
     {
-        Node *toDelete = front;
-        front = front->next;
-        delete toDelete;
+        Node *temp = this->front;
+        this->front = this->front->next;
+        delete temp;
     }
 }
 
@@ -73,17 +74,18 @@ template <class T>
 T IndexedList<T>::getAt(int index) const{
     return getNodeAt(index)->data;
 }
+
 template <class T>
 T IndexedList<T>::get(T element) const{
-    Node* walker = front;
-
-    while (walker != nullptr) {
-        if (walker->data == element)
-            return walker->data;
-        walker = walker->next;
+    for(int i = 0; i < num_elements; i++)
+    {
+        if(getAt(i) == element)
+        {
+            return getAt(i);
+        }
     }
 
-    throw std::runtime_error("element not found");
+    throw std::runtime_error("");
 }
 template <class T>
 void IndexedList<T>::addAt(int index, const T& element) {
@@ -105,27 +107,29 @@ void IndexedList<T>::addAt(int index, const T& element) {
 
 template <class T>
 T IndexedList<T>::removeFirst() {
-    if (isEmpty())
-        throw std::runtime_error("empty list");
-    Node* toDelete = front;
-    T toReturn = toDelete->data;
-    front = front->next;
-    delete toDelete;
-    num_elements--;
-    return toReturn;
+    return removeAt(0);
 }
+
 
 template <class T>
 T IndexedList<T>::removeAt(int index) {
     if (index < 0 || index >= num_elements)
         throw std::runtime_error("out of bounds");
-    if (index == 0)
-        return removeFirst();
 
-    Node* prev = getNodeAt(index - 1);
-    Node* toDelete = prev->next;
-    T toReturn = toDelete->data;
-    prev->next = toDelete->next;
+    Node* toDelete;
+    T toReturn;
+
+    if (index == 0) {
+        toDelete = front;
+        toReturn = toDelete->data;
+        front = front->next;
+    } else {
+        Node* prev = getNodeAt(index - 1);
+        toDelete = prev->next;
+        toReturn = toDelete->data;
+        prev->next = toDelete->next;
+    }
+
     delete toDelete;
     num_elements--;
     return toReturn;
@@ -135,6 +139,7 @@ template <class T>
 T IndexedList<T>::removeLast() {
     if (isEmpty())
         throw std::runtime_error("empty");
+
     return removeAt(num_elements - 1);
 }
 
@@ -151,4 +156,6 @@ T IndexedList<T>::last() const {
         throw std::runtime_error("empty");
     return getNodeAt(num_elements - 1)->data;
 }
+
+
 #endif
