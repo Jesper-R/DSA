@@ -53,13 +53,16 @@ void HeapList<T>::percolateUp(int index) {
 
 template <class T>
 T HeapList<T>::extract() {
-    if (isEmpty())
-        throw std::runtime_error("heap is empty");
+    if (elements.isEmpty())
+        throw std::runtime_error("");
 
     T top = elements.getAt(0);
-    T last = elements.removeAt(elements.size() - 1);
 
-    if (!isEmpty()) {
+
+    if (elements.size() == 1) {
+        elements.removeAt(0);
+    } else {
+        T last = elements.removeAt(elements.size() - 1);
         elements.removeAt(0);
         elements.addAt(0, last);
         percolateDown(0);
