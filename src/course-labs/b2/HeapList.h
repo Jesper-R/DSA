@@ -8,12 +8,9 @@ template <class T>
 class HeapList {
 private:
     IndexedList<T> elements;
-    
-    void heapifyUp(int index);
-    void heapifyDown(int index);
-    int parent(int index) const { return (index - 1) / 2; }
-    int leftChild(int index) const { return 2 * index + 1; }
-    int rightChild(int index) const { return 2 * index + 2; }
+
+    void percolateUp(int index); //
+    void percolateDown(int index); //
 
 public:
     HeapList() = default;
@@ -29,7 +26,7 @@ public:
 };
 
 template <class T>
-int HeapList<T>::size() const {
+int HeapList<T>::size() const{
     return elements.size();
 }
 
@@ -37,79 +34,76 @@ template <class T>
 bool HeapList<T>::isEmpty() const {
     return elements.isEmpty();
 }
-
-template <class T>
-void HeapList<T>::heapifyUp(int index) {
-    if (index <= 0) return;
-    
-    int parentIndex = parent(index);
-    if (elements.getAt(parentIndex) < elements.getAt(index)) {
-        T temp = elements.getAt(index);
-        T parentVal = elements.getAt(parentIndex);
-        
-        elements.removeAt(parentIndex);
-        elements.addAt(parentIndex, temp);
-        
-        elements.removeAt(index);
-        elements.addAt(index, parentVal);
-        
-        heapifyUp(parentIndex);
-    }
-}
-
-template <class T>
-void HeapList<T>::heapifyDown(int index) {
-    int leftIndex = leftChild(index);
-    int rightIndex = rightChild(index);
-    int largest = index;
-    
-    if (leftIndex < elements.size() && elements.getAt(leftIndex) > elements.getAt(largest)) {
-        largest = leftIndex;
-    }
-    
-    if (rightIndex < elements.size() && elements.getAt(rightIndex) > elements.getAt(largest)) {
-        largest = rightIndex;
-    }
-    
-    if (largest != index) {
-        T temp = elements.getAt(index);
-        T largestVal = elements.getAt(largest);
-        
-        elements.removeAt(index);
-        elements.addAt(index, largestVal);
-        
-        elements.removeAt(largest);
-        elements.addAt(largest, temp);
-        
-        heapifyDown(largest);
-    }
-}
-
 template <class T>
 void HeapList<T>::insert(const T& element) {
     elements.addAt(elements.size(), element);
-    heapifyUp(elements.size() - 1);
+    percolateUp(elements.size() - 1);
+}
+
+template <class T>
+void HeapList<T>::percolateUp(int index) {
+    if (index > 0) {
+        int parent = (index - 1) / 2;
+        if (elements.getAt(index) > elements.getAt(parent)) {
+            T tempIndex = elements.getAt(index);
+            T tempParent = elements.getAt(parent);
+
+            elements.removeAt(index);
+            elements.addAt(index, tempParent);
+
+            elements.removeAt(parent);
+            elements.addAt(parent, tempIndex);
+
+            percolateUp(parent);
+        }
+    }
 }
 
 template <class T>
 T HeapList<T>::extract() {
-    if (isEmpty()) {
-        throw std::runtime_error("Heap is empty");
-    }
-    
-    T max = elements.getAt(0);
-    
-    if (elements.size() > 1) {
-        T last = elements.getAt(elements.size() - 1);
+    if (isEmpty())
+        throw std::runtime_error("heap is empty");
+
+    T top = elements.getAt(0);
+    T last = elements.removeAt(elements.size() - 1);
+
+    if (!isEmpty()) {
         elements.removeAt(0);
         elements.addAt(0, last);
-        elements.removeAt(elements.size() - 1);
-        heapifyDown(0);
-    } else {
-        elements.removeFirst();
+        percolateDown(0);
     }
-    
-    return max;
+
+    return top;
+}
+
+template <class T>
+void HeapList<T>::percolateDown(int index) {
+    if (index < elements.size())
+    {
+        int size = elements.size();
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+
+        if (left >= size)
+            return;
+
+        int bestChild = left;
+        if (right < size && elements.getAt(right) > elements.getAt(left))
+            bestChild = right;
+
+        if (elements.getAt(index) < elements.getAt(bestChild)) {
+            T tempIndex = elements.getAt(index);
+            T tempChild = elements.getAt(bestChild);
+
+            elements.removeAt(index);
+            elements.addAt(index, tempChild);
+
+            elements.removeAt(bestChild);
+            elements.addAt(bestChild, tempIndex);
+
+            percolateDown(bestChild);
+        }
+    }
 }
 
 template <class T>
@@ -117,7 +111,7 @@ T HeapList<T>::peek() const {
     if (isEmpty()) {
         throw std::runtime_error("Heap is empty");
     }
-    return elements.getAt(0);
+    return elements.first();
 }
 
 #endif
