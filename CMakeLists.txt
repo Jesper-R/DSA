@@ -27,4 +27,5 @@ add_executable(lab_A1 src/course-labs/A1.cpp src/course-labs/A1.h
         src/course-labs/b2/heap.h
         src/course-labs/b2/PriorityQueueHeap.h
         src/course-labs/b2/PriorityQueueOrderedList.h
+        src/course-labs/b2/Heap.h
 )

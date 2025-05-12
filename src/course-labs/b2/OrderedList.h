@@ -89,30 +89,16 @@ T OrderedList<T>::remove(const T& element) {
     if (isEmpty())
         throw std::runtime_error("empty");
 
-    if (front->data == element) {
-        Node* toDelete = front;
-        T toReturn = toDelete->data;
-        front = front->next;
-        delete toDelete;
-        num_elements--;
-        return toReturn;
+    for (int i = 0; i < num_elements; i++)
+    {
+        if(element == getNodeAt(i)->data)
+        {
+            return removeAt(i);
+        }
     }
-
-    Node* walker = front;
-    while (walker->next != nullptr && walker->next->data != element) {
-        walker = walker->next;
-    }
-
-    if (walker->next == nullptr)
-        throw std::runtime_error("element not found");
-
-    Node* toDelete = walker->next;
-    T toReturn = toDelete->data;
-    walker->next = toDelete->next;
-    delete toDelete;
-    num_elements--;
-    return toReturn;
+    throw std::runtime_error("not found");
 }
+
 
 
 template <class T>
