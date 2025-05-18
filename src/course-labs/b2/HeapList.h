@@ -57,12 +57,10 @@ T HeapList<T>::extract() {
         throw std::runtime_error("");
 
     T top = elements.getAt(0);
+    T last = elements.removeAt(elements.size() - 1);
 
-
-    if (elements.size() == 1) {
-        elements.removeAt(0);
-    } else {
-        T last = elements.removeAt(elements.size() - 1);
+    if(!isEmpty())
+    {
         elements.removeAt(0);
         elements.addAt(0, last);
         percolateDown(0);
@@ -73,21 +71,24 @@ T HeapList<T>::extract() {
 
 template <class T>
 void HeapList<T>::percolateDown(int index) {
-    int size = elements.size();
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
+    if(index < elements.size())
+    {
+        int size = elements.size();
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
 
-    if (left >= size)
-        return;
+        if (left >= size)
+            return;
 
-    int bestChild = left;
-    if (right < size && elements.getAt(right) > elements.getAt(left)) {
-        bestChild = right;
-    }
+        int bestChild = left;
+        if (right < size && elements.getAt(right) > elements.getAt(left)) {
+            bestChild = right;
+        }
 
-    if (elements.getAt(index) < elements.getAt(bestChild)) {
-        elements.swap(index, bestChild);
-        percolateDown(bestChild);
+        if (elements.getAt(index) < elements.getAt(bestChild)) {
+            elements.swap(index, bestChild);
+            percolateDown(bestChild);
+        }
     }
 }
 

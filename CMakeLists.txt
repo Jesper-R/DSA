@@ -28,4 +28,6 @@ add_executable(lab_A1 src/course-labs/A1.cpp src/course-labs/A1.h
         src/course-labs/b2/PriorityQueueHeap.h
         src/course-labs/b2/PriorityQueueOrderedList.h
         src/course-labs/b2/Heap.h
+        src/course-labs/c1/Graph.h
+        src/course-labs/c1/DisjointSets.h
 )
