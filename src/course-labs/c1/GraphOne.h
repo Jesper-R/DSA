@@ -110,29 +110,32 @@ void Graph<T>::kruskals(std::vector<std::tuple<T, T, int>>& mst, int& totalCost)
 	{
 		throw std::runtime_error("No vertices to create an MST from");
 	}
+
 	vector<tuple<int, T, T>> edges;
 	DisjointSets<T> ds;
 
 	// Add all edges with weight first into tuple, then sort them by weight.
-	for (const auto& [u, neighbours] : adjList)
+	for(auto [v, neighbours] : adjList)
 	{
-		ds.makeSet(u);
-		for (const auto& [v, weight] : neighbours)
+		ds.makeSet(v);
+		for(auto [w, weight] : neighbours)
 		{
-			if (u < v) edges.emplace_back(weight, u, v);
-			ds.makeSet(v); // create sets for all nodes
+			if (v < w) // ensure edges arent added twice
+				edges.emplace_back(weight, v, w);
+			ds.makeSet(w); // ensure every node is in a disjoint set
 		}
 	}
+
 	sort(edges.begin(), edges.end());
 
-	// Add edges to mst aslong as it doesnt create a cycle
 	totalCost = 0;
-	for (auto [weight, u, v] : edges)
+	// Add edges to mst aslong as it doesnt create a cycle
+	for(auto [weight, v, w] : edges)
 	{
-		if (ds.findSet(u) != ds.findSet(v)) // check if they have the same super parent
+		if(ds.findSet(v) != ds.findSet(w)) // check if they have the same super parent
 		{
-			ds.unionSet(u, v);
-			mst.emplace_back(u, v, weight);
+			ds.unionSet(v, w);
+			mst.emplace_back(v, w, weight);
 			totalCost += weight;
 		}
 	}
