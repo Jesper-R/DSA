@@ -3,31 +3,9 @@ project(DSA)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# algorithms
-add_executable(linear_search src/algorithms/linear_search.cpp
-        src/algorithms/merge.h
-        src/algorithms/quicklomuto.h
-        src/algorithms/quickhoare.h
-        src/algorithms/heap.h)
 
-# course-labs
-add_executable(lab_A1 src/course-labs/A1.cpp src/course-labs/A1.h
-        src/course-labs/A2.h
-        src/course-labs/B1.h
-        src/course-labs/b2/QueueArray.h
-        src/course-labs/b1/StackLinkedList.h
-        src/course-labs/b1/StackLinkedList.cpp
-        src/course-labs/b1/StackArray.h
-        src/course-labs/b1/StackArray.cpp
-        src/course-labs/b1/QueueLinkedList.h
-        src/course-labs/b1/QueueArray.h
-        src/course-labs/b2/IndexedList.h
-        src/course-labs/b2/HeapList.h
-        src/course-labs/b2/OrderedList.h
-        src/course-labs/b2/heap.h
-        src/course-labs/b2/PriorityQueueHeap.h
-        src/course-labs/b2/PriorityQueueOrderedList.h
-        src/course-labs/b2/Heap.h
-        src/course-labs/c1/Graph.h
-        src/course-labs/c1/DisjointSets.h
-)
+
+add_executable(GraphTestOne src/course-labs/c1/GraphPt1.cpp
+        src/course-labs/c1/Priorityqueue.h
+        src/course-labs/c1/Heap.h
+        src/course-labs/c1/GraphOne.h)

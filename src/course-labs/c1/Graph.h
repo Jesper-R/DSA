@@ -68,7 +68,7 @@ std::vector<T> Graph<T>::getAllNeighboursTo(T vertex)
         neighbours.push_back(pair.first);
     }
 
-    std::sort(neighbours.begin(), neighbours.end());  // Alphabetical order
+    std::sort(neighbours.begin(), neighbours.end());
     return neighbours;
 }
 
